@@ -35,7 +35,7 @@ class ThermalDataset(BaseDataset):
         input_nc = self.opt.output_nc if btoA else self.opt.input_nc       # get the number of channels of input image
         output_nc = self.opt.input_nc if btoA else self.opt.output_nc      # get the number of channels of output image
         self.transform_A = get_transform(self.opt, grayscale=(input_nc == 1))
-        self.transform_B = get_transform(self.opt, grayscale=(output_nc == 1))
+        self.transform_B = get_transform(self.opt, channel = output_nc)
 
     def __getitem__(self, index):
         """Return a data point and its metadata information.
@@ -61,6 +61,8 @@ class ThermalDataset(BaseDataset):
         # apply image transformation
         A = self.transform_A(A_img)
         B = self.transform_B(B_img)
+        # print(B)
+        # exit()
 
         return {'A': A, 'B': B, 'A_paths': A_path, 'B_paths': B_path}
 
